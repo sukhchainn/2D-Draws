@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+  <script src='p5/p5.js'></script>
+</head>
+<body>
+  <button onclick="openWindow()">click me to open a new window.</button>
+  <div id='container'></div>
+  <script>
+    function openWindow() {
+        var newWindow = window.open("", "Import Image", "height=56,width=56,status=yes,toolbar=no,menubar=no,location=no");  
+        
+        newWindow.document.write("<canvas id='imagePlaceholder'>Canvas not supported!</canvas>");
+        var canvas = newWindow.document.getElementById("imagePlaceholder");
+        var ctx = canvas.getContext("2d");
+
+        ctx.drawImage(img, 0, 0);
+        // console.log(ctx.getImageData(0, 0, 56, 56).data);
+        var dest = ctx.getImageData(0, 0, 56, 56).data;
+        console.log(dest);
+    }
+
+
+  let sketch = function(p) {
+    p.setup = function(){
+      p.createCanvas(56, 56);
+      img = new Image();
+      img.src = "scott.jpg";
+      let dest = p.createImage(56, 56);
+      console.log(img);
+    }
+    p.draw = function() {
+    	// p.drawingContext.drawImage(img, 0, 0);
+      // p.loadPixels();
+      img.loadPixels();
+      for (var x=0; x<p.width; x++) {
+        for (var y=0; y<p.height; y++) {
+          // var d = p.dist(x, y, p.width/2, p.height/2);
+          var loc = x+y+p.width;
+          // p.pixels[loc] = p.color(d);
+          p.pixels[loc] = img.pixels[loc];
+        }
+      }
+	}
+  p.updatePixels();
+  };
+  new p5(sketch, 'container');
+  </script>
+</body>
+</html>

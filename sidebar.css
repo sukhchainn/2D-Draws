@@ -1,0 +1,85 @@
+ /* The side navigation menu */
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #e1e2e1;
+  position: fixed;
+  top: 50px;
+  height: calc(100% - 50px);
+  overflow: auto;
+  scroll-behavior: smooth;
+}
+
+/* Sidebar links */
+.sidebar a {
+  display: flex;
+  color: grey;
+  /*padding: 16px;*/
+  text-decoration: none;
+  align-items: center;
+}
+
+/* Active/current link */
+.sidebar a.active {
+  color: black;
+}
+.sidebar a.active:hover {
+  background-color: #bb86fc;
+}
+
+/* Links on mouse-over */
+.sidebar a:hover:not(.active) {
+  background-color: #8196FF;
+  color: black;
+}
+
+.sidebar li {
+  width: 30px;
+  hyphens: 30px;
+  display: inline;
+}
+
+.sidebar .section {
+  display: flex;
+  justify-content: space-between;
+  color: black; 
+  font-family: Verdana; 
+  font-size: 17px; 
+  padding-left: 10px;
+  margin: 0px;
+}
+
+/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+div.content {
+  margin-left: 200px;
+  margin-right: 201px;
+  padding: 1px 16px;
+  padding-top: 50px;
+  height: calc(100% - 50px);
+  /*background-color: #ffffcc;*/
+}
+
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: calc(100% - 50px);
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  .content {
+    margin-left: 0;
+    height: calc(100% - 50px);
+    border: solid 1px black;
+  }
+}
+
+/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
