@@ -12,8 +12,10 @@
 	<title>2D Draws</title>
 	<link rel="stylesheet" type="text/css" href="main.css">
 	<link rel="stylesheet" type="text/css" href="sidebar.css">
+	<link rel="stylesheet" type="text/css" href="context.js/context-menu.min.css">
 	<script type="text/javascript" src="angular-1.8.2/angular.js"></script>
 	<script type="text/javascript" src="p5/p5.js"></script>
+	<script type="text/javascript" src="context.js/context-menu.min.js"></script>
 	<script type="text/javascript" src="scripts/app.js"></script>
 	<script type="text/javascript" src="scripts/stringService.js"></script>
 </head>
@@ -24,7 +26,7 @@
 		<p class="icon" ng-click="rightMenuVisibility==''?rightMenuVisibility='hidden':rightMenuVisibility=''">@</p>
 	</header>
 
-	<div style="height: 100vh; background-color: #e1e2e1">
+	<div style="height: 100vh; background-color: #E5E5FF"> <!-- #e1e2e1 -->
 
 		<!-- The sidebar -->
 		<div id="leftFirstMenu" class="sidebar" ng-show="leftMenuVisibility">

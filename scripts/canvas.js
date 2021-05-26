@@ -2,7 +2,7 @@ let sketch = function(p) {
 	var pos = 1, draw=true;
 	p.setup = () => {
 		p.createCanvas(window.innerWidth - 460, window.innerHeight - 75);
-		p.background("#f5f5f6");
+		p.background("#FFFFFF");	//#f5f5f6
 	}
 
 	p.draw = () => {
