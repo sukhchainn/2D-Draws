@@ -50,6 +50,15 @@
   margin: 0px;
 }
 
+.dropdown-menu {
+  background: white;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+}
+.pointer:hover {
+  background-color: #f2ffc4;
+}
+
 /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
 div.content {
   margin-left: 200px;

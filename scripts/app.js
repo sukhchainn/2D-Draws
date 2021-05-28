@@ -1,9 +1,8 @@
-var app = angular.module('app-main', []);
+var app = angular.module('app-main', ['ngRoute', 'ng-context-menu']);
 
 app.controller('side-nav', function displayMessage($scope, stringService) {
 	$scope.message = "Hello World!";
 	$scope.transformString = function (input) {
-
 		$scope.output = stringService.processString(input);
 	}
 
@@ -110,4 +109,46 @@ app.controller('side-nav', function displayMessage($scope, stringService) {
 		else $scope.settingsVisibility = "";
 	}
 
+	$scope.openContextMenu = (evt) => {
+		evt.preventDefault();
+		const time = menu.isOpen() ? 100 : 0;
+		menu.hide();
+		setTimeout(() => { menu.show(evt.pageX, evt.pageY) }, time);
+		document.addEventListener('click', hideContextMenu, false);
+	}
+	$scope.hideContextMenu = (evt) => {
+		menu.hide();
+		document.removeEventListener('click', hideContextMenu);
+	}
+});
+
+app.directive( "ngContextmenu", function(){
+    contextMenu = {replace: false};
+    contextMenu.restrict = "AE";
+    
+    contextMenu.scope = {"visible": "="};
+    contextMenu.link = function( $scope, lElem, lAttr ){
+        lElem.on("contextmenu", function (e) {
+                
+                e.preventDefault();
+            
+                console.log("Element right clicked.");
+                $scope.$apply(function () {
+                     $scope.visible = true;
+                })
+            
+                
+      
+        });
+        lElem.on("mouseleave", function(e){
+         
+                console.log("Leaved the div");
+                 console.log("Element right clicked.");
+                $scope.$apply(function () {
+                     $scope.visible = false;
+                })
+         
+        });
+    };
+    return contextMenu;
 });
