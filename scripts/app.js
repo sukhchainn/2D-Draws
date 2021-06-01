@@ -109,6 +109,13 @@ app.controller('side-nav', function displayMessage($scope, stringService) {
 		else $scope.settingsVisibility = "";
 	}
 
+	$scope.dropdownVisibility = "";
+	$scope.dropdown_visibility = () => {
+		if ($scope.dropdownVisibility == "")
+			$scope.dropdownVisibility = "none";
+		else $scope.dropdownVisibility = "";
+	}
+
 	$scope.openContextMenu = (evt) => {
 		evt.preventDefault();
 		const time = menu.isOpen() ? 100 : 0;
