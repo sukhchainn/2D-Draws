@@ -25,14 +25,12 @@
 	<title>2D Draws</title>
 	<link rel="stylesheet" type="text/css" href="main.css">
 	<link rel="stylesheet" type="text/css" href="sidebar.css">
-	<!-- <link rel="stylesheet" type="text/css" href="bootstrap.min.css"> -->
 	<!-- <link rel="stylesheet" type="text/css" href="context.js/context-menu.min.css"> -->
 	<script type="text/javascript" src="angular-1.8.2/angular.js"></script>
 	<script type="text/javascript" src="angular-1.8.2/angular-route.min.js"></script>
 	<script type="text/javascript" src="p5/p5.js"></script>
 	<!-- <script type="text/javascript" src="context.js/context-menu.min.js"></script> -->
 	<script type="text/javascript" src="scripts/app.js"></script>
-	<script type="text/javascript" src="scripts/popper.min.js"></script>
 	<script type="text/javascript" src="scripts/ng-context-menu.js"></script>
 	<script type="text/javascript" src="scripts/stringService.js"></script>
 </head>
@@ -85,22 +83,25 @@
 		<!-- The sidebar -->
 		<div class="sidebar" style="right: 0;" ng-hide="rightMenuVisibility">
 			<div class="section" ng-click="tools_visibility()">
-		  		<p style="color: grey;">tools</p><p>&#8681;</p>
+		  		<p style="color: grey;">Tools</p><p>&#8681;</p>
 		  	</div>
 			<div style="margin: 0; text-align: center;" ng-hide="toolsVisibility">
 				<ul style="display: inline; padding-left: 0;" ng-repeat="tool in tools">
-					<li id="tools" context-menu class="icon_sm" ng-click="" data-target="myMenu"
+					<li id="tools" 
+						context-menu class="icon_sm" 
+						ng-mousedown="selectTool($event, tool)"
+						data-target="myMenu"
 						ng-class="{ 'highlight': highlight, 'expanded' : expanded }">{{tool}}</li>
 				</ul>
 			</div>
 			<div class="section" ng-click="settings_visibility()">
-		  		<p style="color: grey;">settings</p><p>&#8681;</p>
+		  		<p style="color: grey;">Settings</p><p>&#8681;</p>
 		  	</div>
 		  	<div class="setting" ng-hide="settingsVisibility">
 		  		<ul ng-repeat="setting in settings" style="margin: 0px; padding: 0px;">
 					<li style="display: flex; justify-content: space-between; width: 100%; height: 40px;" class="setting-li" ng-click="">
 						<p style="display: inline;">{{setting}}<p>
-						<input style="display: inline;" type="text" name="{{setting}}"/>
+						<input style="display: inline;" type="text" name="{{setting}}" value="{{setting}}" />
 					</li>
 				</ul>
 		  	</div>
@@ -109,20 +110,12 @@
 	</div>
 
 	<div class="dropdown" id="myMenu">
-		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-			<li role="presentation">
-			  	<a class="pointer" role="menuitem" tabindex="0" ng-click="highlight = true">Select</a>
+		<ul class="dropdown-menu"
+		    	role="menu" aria-labelledby="dropdownMenu1">
+			<li ng-repeat="tool_option in tool_options[selected_tool]" role="presentation">
+			  	<a class="pointer" role="menuitem" tabindex="-1" ng-click="highlight = true">{{tool_option}}</a>
 			</li>
 		</ul>
 	</div>
-
-<!--     <script>
-      const button = document.querySelector('#tools');
-      const tooltip = document.querySelector('#myMenu');
-
-      const popperInstance = Popper.createPopper(button, tooltip, {
-									  placement: 'left',
-									});;
-    </script> -->
 </body>
 </html>

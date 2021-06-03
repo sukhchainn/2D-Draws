@@ -50,16 +50,15 @@
   margin: 0px;
 }
 
-.dropdown {
 
-}
+/*Rightclick menu*/
 .dropdown-menu {
   display: block;
+  width: 150px;
   background: white;
   border: 1px solid lightgrey;
   border-radius: 5px;
   background-color: #f9f9f9;
-  min-width: 160px;
   padding: 0;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;

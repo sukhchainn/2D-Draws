@@ -19,12 +19,11 @@ angular
         function open(event, element) {
           element.removeClass('open');
           element.css('top', event.pageY + 'px');
-          if (element.offsetWidth + event.pageX > window.width)
-            element.css('left', (event.pageX - element.offsetWidth) + 'px');
+          if (150 + event.pageX > screen.width)
+            element.css('left', (event.pageX - 150) + 'px');
           else 
             element.css('left', event.pageX + 'px');
 
-          console.log("Event.pageX "+event.pageX+"\nEvent.pageY"+event.pageY+"\nElement.offsetWidth"+element.getBoundingClientRect());
           opened = true;
         }
 
@@ -34,8 +33,8 @@ angular
         }
 
         menuElement.css('position', 'absolute');
-        menuElement.addClass('open');
-        console.log(menuElement.getBoundingClientRect());
+        // menuElement.addClass('open');
+        // console.log(menuElement.getBoundingClientRect());
         
 
         element.bind('contextmenu', function(event) {

@@ -18,7 +18,35 @@ app.controller('side-nav', function displayMessage($scope, stringService) {
 		['J', 'K', 'L', 'M' ,
 		 'N', 'O', 'P', 'Q']
 	;
-	var selected_tool = 'J';
+	$scope.selected_tool = 'K';
+	$scope.tool_options = {
+		J: ['line', 'pen', 'pencil'],
+		K: ['select'],
+		L: ['bucket fill', 'color picker', 'color wheel'],
+		M: [],
+		N: [],
+		O: ['triangel', 'square', 'circle'],
+		P: [],
+		Q: []
+	};
+	$scope.selectTool = (evt, s) => {
+		switch(evt.which) {
+	        case 1:
+	            increment(); // left click
+	            break;
+	        case 2:
+	            // in case you need some middle click things
+	            break;
+	        case 3:
+	        	// right click
+	            break;
+	        default:
+	            alert("you have a strange mouse!");
+	            break;
+	    }
+		$scope.selected_tool = s;
+		console.log($scope.selected_tool + " " + $scope.tool_options[$scope.selected_tool]);
+	}
 
 	// tools logic starts here...
 	var settings = 
