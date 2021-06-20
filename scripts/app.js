@@ -23,11 +23,11 @@ app.controller('side-nav', function displayMessage($scope, stringService) {
 		J: ['line', 'pen', 'pencil'],
 		K: ['select'],
 		L: ['bucket fill', 'color picker', 'color wheel'],
-		M: [],
-		N: [],
+		M: ['select'],
+		N: ['select'],
 		O: ['triangel', 'square', 'circle'],
-		P: [],
-		Q: []
+		P: ['select'],
+		Q: ['select'],
 	};
 	$scope.selectTool = (evt, s) => {
 		switch(evt.which) {

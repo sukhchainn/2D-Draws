@@ -1,26 +1,76 @@
+
+
+var x=0, y=0;
 let sketch = function(p) {
-	var pos = 1, draw=true;
+	var canvas = document.getElementById("canvas");
+	var size = 25, redraw=true, width = window.innerWidth - 460, height = window.innerHeight - 75;
+	var canvasX1 = canvas.offsetLeft, canvasY1 = canvas.offsetTop, canvasX2 = canvasX1+width, canvasY2 = canvasY1+height;
+	var pixels = new Array(), pixelRow=0;
 	p.setup = () => {
-		p.createCanvas(window.innerWidth - 460, window.innerHeight - 75);
+		p5.disableFriendlyErrors = true;
+		p.createCanvas(width, height);
 		p.background("#FFFFFF");	//#f5f5f6
+		p.strokeWeight(0.2);
+
+		pixels.push(new Array());
+		while (y < height) {
+			pixels[pixelRow].push(new PixelRec(p, x, y, size));
+			if (x > width) {
+				x=0;
+				y+=size;
+				pixels.push(new Array());
+				pixelRow++;
+			} else {
+				x+=size;
+			}
+		}
 	}
 
 	p.draw = () => {
-		
+		if (redraw) {
+			for (var i=0; i<pixels.length; i++) {
+				for (var j=0; j<pixels[i].length; j++) {
+					pixels[i][j].draw();
+				}
+			}
+			redraw = false;
+		}
 	}
 	p.mouseClicked = () => {
-  		p.drawingContext.scale(2, 2);
-  		console.log("mouseClicked");
-	}
+		if (event.x > canvasX1 && event.y > canvasY1
+		 && event.x < canvasX2 && event.y < canvasY2) {
+			let a = (p.mouseX)/size;
+			let b = (p.mouseY)/size;
+			a = parseInt(a);
+			b = parseInt(b);
+			pixels[b][a].click();
+			redraw = true;
+		}
+  	}
 	p.mouseWheel = (event) => {
 		// print(event.delta);
-		if (event.delta > 0 || pos > 1)
-		pos += event.delta;
-		console.log(pos);
+		if (event.delta > 0 || size > 1)
+		size += event.delta/2;
+		console.log(size);
 		//return false;
 	}
 	p.mouseMoved = () => {}
-	p.mouseDragged = () => {}
+	p.mouseDragged = (event) => {
+		// for (var i=0; i<pixels.length; i++) {
+		// 	for (var j=0; j<pixels[i].length; j++) {
+		// 		pixels[i][j].click();
+		// 	}
+		// }
+		if (event.x > canvasX1 && event.y > canvasY1
+		 && event.x < canvasX2 && event.y < canvasY2) {
+			let a = (p.mouseX)/size;
+			let b = (p.mouseY)/size;
+			a = parseInt(a);
+			b = parseInt(b);
+			pixels[b][a].click();
+			redraw = true;
+		}
+	}
 	p.mousePressed = () => {}
 	p.mouseReleased = () => {}
 	p.doubleClicked = () => {}
