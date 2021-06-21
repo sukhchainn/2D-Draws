@@ -3,7 +3,7 @@
 var x=0, y=0;
 let sketch = function(p) {
 	var canvas = document.getElementById("canvas");
-	var size = 25, redraw=true, width = window.innerWidth - 460, height = window.innerHeight - 75;
+	var size = 10, redraw=true, width = window.innerWidth - 460, height = window.innerHeight - 75;
 	var canvasX1 = canvas.offsetLeft, canvasY1 = canvas.offsetTop, canvasX2 = canvasX1+width, canvasY2 = canvasY1+height;
 	var pixels = new Array(), pixelRow=0;
 	p.setup = () => {
@@ -14,7 +14,7 @@ let sketch = function(p) {
 
 		pixels.push(new Array());
 		while (y < height) {
-			pixels[pixelRow].push(new PixelRec(p, x, y, size));
+			pixels[pixelRow].push(new PixelRec(p, x, y, size, false));
 			if (x > width) {
 				x=0;
 				y+=size;
@@ -24,15 +24,21 @@ let sketch = function(p) {
 				x+=size;
 			}
 		}
-	}
-
-	p.draw = () => {
-		if (redraw) {
-			for (var i=0; i<pixels.length; i++) {
+		for (var i=0; i<pixels.length; i++) {
 				for (var j=0; j<pixels[i].length; j++) {
 					pixels[i][j].draw();
 				}
 			}
+			redraw = false;
+	}
+
+	p.draw = () => {
+		if (redraw) {
+			let a = (p.mouseX)/size;
+			let b = (p.mouseY)/size;
+			a = parseInt(a);
+			b = parseInt(b);
+			pixels[b][a].draw();
 			redraw = false;
 		}
 	}

@@ -50,7 +50,7 @@ app.controller('side-nav', function displayMessage($scope, stringService) {
 
 	// tools logic starts here...
 	var settings = 
-		['x', 'y',
+		['x', 'y', 'size',
 		'width', 'height', 'margin', 'padding']
 	;
 	var selected_setting = 'J';
@@ -157,33 +157,33 @@ app.controller('side-nav', function displayMessage($scope, stringService) {
 	}
 });
 
-app.directive( "ngContextmenu", function(){
-    contextMenu = {replace: false};
-    contextMenu.restrict = "AE";
+// app.directive( "ngContextmenu", function(){
+//     contextMenu = {replace: false};
+//     contextMenu.restrict = "AE";
     
-    contextMenu.scope = {"visible": "="};
-    contextMenu.link = function( $scope, lElem, lAttr ){
-        lElem.on("contextmenu", function (e) {
+//     contextMenu.scope = {"visible": "="};
+//     contextMenu.link = function( $scope, lElem, lAttr ){
+//         lElem.on("contextmenu", function (e) {
                 
-                e.preventDefault();
+//                 e.preventDefault();
             
-                console.log("Element right clicked.");
-                $scope.$apply(function () {
-                     $scope.visible = true;
-                })
+//                 console.log("Element right clicked.");
+//                 $scope.$apply(function () {
+//                      $scope.visible = true;
+//                 })
             
                 
       
-        });
-        lElem.on("mouseleave", function(e){
+//         });
+//         lElem.on("mouseleave", function(e){
          
-                console.log("Leaved the div");
-                 console.log("Element right clicked.");
-                $scope.$apply(function () {
-                     $scope.visible = false;
-                })
+//                 console.log("Leaved the div");
+//                  console.log("Element right clicked.");
+//                 $scope.$apply(function () {
+//                      $scope.visible = false;
+//                 })
          
-        });
-    };
-    return contextMenu;
-});
+//         });
+//     };
+//     return contextMenu;
+// });
