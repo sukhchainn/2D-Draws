@@ -50,8 +50,13 @@ app.controller('side-nav', function displayMessage($scope, stringService) {
 
 	// tools logic starts here...
 	var settings = 
-		['x', 'y', 'size',
-		'width', 'height', 'margin', 'padding']
+		[
+		 {name:'size', value:'5', type:'number'},
+		 {name:'width', value:'100%', type:'text'},
+		 {name:'height', value:'100%', type:'text'},
+		 {name:'color', value:'black', type:'text'},
+		 {name:'grid', value:'checked', type:'checkbox'}
+		]
 	;
 	var selected_setting = 'J';
 

@@ -7,22 +7,21 @@ class PixelRec {
 		this.size = size;
 		this.color = 'white';
 		this.border = border;
-		this.borderColor = 'grey';
+		this.borderColor = 'lightgrey';
 	}
 
-	click() {
-		if (this.p.mouseX > this.x && this.p.mouseX < this.x+this.size && this.p.mouseY > this.y && this.p.mouseY < this.y+this.size)
-			this.color = 'black';
-		// for (var i=0; i<pixels.length; i++) {
-		// 	for (var j=0; j<pixels[i].length; j++) {
-		// 		console.log("coordinated :"+pixels[i][j].y+" "+pixels[i][j].x);
-		// 	}
-		// }
+	click(color) {
+		if (this.p.mouseX >= this.x && this.p.mouseX <= this.x+this.size && this.p.mouseY >= this.y && this.p.mouseY <= this.y+this.size)
+			this.color = color;
+	}
+	resize(size) {
+		this.size = size;
 	}
 
 	draw() {
 		if (this.border) {
 			this.p.stroke(this.borderColor);
+			this.p.strokeWeight(0.2);
 		} else {
 			this.p.noStroke();
 		}

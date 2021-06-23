@@ -1,11 +1,11 @@
+var canvas = document.getElementById("canvas");
+var size = 5, redraw=true, width = window.innerWidth - 460, height = window.innerHeight - 75;
+var canvasX1 = canvas.offsetLeft, canvasY1 = canvas.offsetTop, canvasX2 = canvasX1+width, canvasY2 = canvasY1+height;
+var pixels = new Array(), pixelRow=0;
+var colors = ['white', 'black'], colorSelected = 1;
 
-
-var x=0, y=0;
 let sketch = function(p) {
-	var canvas = document.getElementById("canvas");
-	var size = 10, redraw=true, width = window.innerWidth - 460, height = window.innerHeight - 75;
-	var canvasX1 = canvas.offsetLeft, canvasY1 = canvas.offsetTop, canvasX2 = canvasX1+width, canvasY2 = canvasY1+height;
-	var pixels = new Array(), pixelRow=0;
+	var x=0, y=0;
 	p.setup = () => {
 		p5.disableFriendlyErrors = true;
 		p.createCanvas(width, height);
@@ -25,11 +25,12 @@ let sketch = function(p) {
 			}
 		}
 		for (var i=0; i<pixels.length; i++) {
-				for (var j=0; j<pixels[i].length; j++) {
-					pixels[i][j].draw();
-				}
+			for (var j=0; j<pixels[i].length; j++) {
+				pixels[i][j].resize(size);
+				pixels[i][j].draw();
 			}
-			redraw = false;
+		}
+		redraw = false;
 	}
 
 	p.draw = () => {
@@ -38,26 +39,20 @@ let sketch = function(p) {
 			let b = (p.mouseY)/size;
 			a = parseInt(a);
 			b = parseInt(b);
+			console.log(a+" yes "+b);
 			pixels[b][a].draw();
 			redraw = false;
 		}
 	}
 	p.mouseClicked = () => {
-		if (event.x > canvasX1 && event.y > canvasY1
-		 && event.x < canvasX2 && event.y < canvasY2) {
-			let a = (p.mouseX)/size;
-			let b = (p.mouseY)/size;
-			a = parseInt(a);
-			b = parseInt(b);
-			pixels[b][a].click();
-			redraw = true;
-		}
+		canvasClick();
   	}
 	p.mouseWheel = (event) => {
 		// print(event.delta);
 		if (event.delta > 0 || size > 1)
 		size += event.delta/2;
 		console.log(size);
+		// resize();
 		//return false;
 	}
 	p.mouseMoved = () => {}
@@ -67,21 +62,49 @@ let sketch = function(p) {
 		// 		pixels[i][j].click();
 		// 	}
 		// }
-		if (event.x > canvasX1 && event.y > canvasY1
-		 && event.x < canvasX2 && event.y < canvasY2) {
-			let a = (p.mouseX)/size;
-			let b = (p.mouseY)/size;
-			a = parseInt(a);
-			b = parseInt(b);
-			pixels[b][a].click();
-			redraw = true;
-		}
+		canvasClick();
 	}
 	p.mousePressed = () => {}
 	p.mouseReleased = () => {}
 	p.doubleClicked = () => {}
+	p.keyTyped = () => {
+		switch(p.key) {
+			case 'z':
+				colorSelected = 0;
+				break;
+			case 'x':
+				colorSelected = 1;
+				break;
+		}
+		console.log(p.key, colorSelected);
+		return false;
+	}
 	p.requestPointerLock = () => {}
 	p.exitPointerLock = () => {}
+
+	canvasClick = () => {
+		if (event.x > canvasX1 && event.y > canvasY1
+			 && event.x < canvasX2 && event.y < canvasY2) {
+				let a = (p.mouseX)/size;
+				let b = (p.mouseY)/size;
+				a = parseInt(a);
+				b = parseInt(b);
+				pixels[b][a].click(colors[colorSelected]);
+				redraw = true;
+			}
+	}
+	resize = () => {
+		// resize the canvas according to the zoom level
+
+		// draw the resized canvas
+		for (var i=0; i<pixels.length; i++) {
+			for (var j=0; j<pixels[i].length; j++) {
+				pixels[i][j].resize(size);
+				pixels[i][j].draw();
+			}
+		}
+		redraw = false;
+	}
 };
 
 new p5(sketch, 'canvas');

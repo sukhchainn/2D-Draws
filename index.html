@@ -101,8 +101,8 @@
 		  	<div class="setting" ng-hide="settingsVisibility">
 		  		<ul ng-repeat="setting in settings" style="margin: 0px; padding: 0px;">
 					<li style="display: flex; justify-content: space-between; width: 100%; height: 40px;" class="setting-li" ng-click="">
-						<p style="display: inline;">{{setting}}<p>
-						<input style="display: inline;" type="text" name="{{setting}}" value="{{setting}}" />
+						<p style="display: inline;">{{setting.name}}<p>
+						<input style="display: inline;" type="{{setting.type}}" name="{{setting.name}}" value="{{setting.value}}" min="5" max="25" ng-if="setting.value ? checked='true' : false" />
 					</li>
 				</ul>
 		  	</div>
