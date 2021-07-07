@@ -51,11 +51,11 @@ app.controller('side-nav', function displayMessage($scope, stringService) {
 	// tools logic starts here...
 	var settings = 
 		[
-		 {name:'size', value:'5', type:'number'},
+		 {name:'size', value:5, type:'number'},
 		 {name:'width', value:'100%', type:'text'},
 		 {name:'height', value:'100%', type:'text'},
 		 {name:'color', value:'black', type:'text'},
-		 {name:'grid', value:'checked', type:'checkbox'}
+		 {name:'grid', value: true, type:'checkbox'}
 		]
 	;
 	var selected_setting = 'J';
@@ -160,6 +160,118 @@ app.controller('side-nav', function displayMessage($scope, stringService) {
 		menu.hide();
 		document.removeEventListener('click', hideContextMenu);
 	}
+	$scope.inputChanged = () => {
+		console.log("Changed!");
+	}
+
+
+	var canvas = document.getElementById("canvas");
+	var redraw = true, width = window.innerWidth - 460, height = window.innerHeight - 75;
+	var canvasX1 = canvas.offsetLeft, canvasY1 = canvas.offsetTop, canvasX2 = canvasX1+width, canvasY2 = canvasY1+height;
+	var pixels = new Array(), pixelRow=0;
+	var colors = ['white', 'black'], colorSelected = 1;
+
+	let sketch = function(p) {
+		var x=0, y=0;
+		p.setup = () => {
+			p5.disableFriendlyErrors = true;
+			p.createCanvas(width, height);
+			p.background("#FFFFFF");	//#f5f5f6
+			p.strokeWeight(0.2);
+
+			pixels.push(new Array());
+			while (y < height) {
+				pixels[pixelRow].push(new PixelRec(p, x, y, settings[0].value, settings[4].value));
+				if (x > width) {
+					x=0;
+					y+=settings[0].value;
+					pixels.push(new Array());
+					pixelRow++;
+				} else {
+					x+=settings[0].value;
+				}
+			}
+			for (var i=0; i<pixels.length; i++) {
+				for (var j=0; j<pixels[i].length; j++) {
+					pixels[i][j].resize(settings[0].value);
+					pixels[i][j].draw();
+				}
+			}
+			redraw = false;
+		}
+
+		p.draw = () => {
+			if (redraw) {
+				let a = (p.mouseX)/settings[0].value;
+				let b = (p.mouseY)/settings[0].value;
+				a = parseInt(a);
+				b = parseInt(b);
+				pixels[b][a].draw();
+				redraw = false;
+			}
+		}
+		p.mouseClicked = () => {
+			canvasClick();
+	  	}
+		p.mouseWheel = (event) => {
+			// print(event.delta);
+			if (event.delta > 0 || settings[0].value > 1)
+			settings[0].value += event.delta/2;
+			// resize();
+			//return false;
+		}
+		p.mouseMoved = () => {}
+		p.mouseDragged = (event) => {
+			// for (var i=0; i<pixels.length; i++) {
+			// 	for (var j=0; j<pixels[i].length; j++) {
+			// 		pixels[i][j].click();
+			// 	}
+			// }
+			canvasClick();
+		}
+		p.mousePressed = () => {}
+		p.mouseReleased = () => {}
+		p.doubleClicked = () => {}
+		p.keyTyped = () => {
+			switch(p.key) {
+				case 'z':
+					colorSelected = 0;
+					break;
+				case 'x':
+					colorSelected = 1;
+					break;
+			}
+			return false;
+		}
+		p.requestPointerLock = () => {}
+		p.exitPointerLock = () => {}
+
+		canvasClick = () => {
+			if (event.x > canvasX1 && event.y > canvasY1
+				 && event.x < canvasX2 && event.y < canvasY2) {
+					let a = (p.mouseX)/settings[0].value;
+					let b = (p.mouseY)/settings[0].value;
+					a = parseInt(a);
+					b = parseInt(b);
+					pixels[b][a].click(colors[colorSelected]);
+					redraw = true;
+				}
+		}
+		resize = () => {
+			// resize the canvas according to the zoom level
+
+			// draw the resized canvas
+			for (var i=0; i<pixels.length; i++) {
+				for (var j=0; j<pixels[i].length; j++) {
+					pixels[i][j].resize(settings[0].value);
+					pixels[i][j].draw();
+				}
+			}
+			redraw = false;
+		}
+	};
+
+	$scope.s = new p5(sketch, 'canvas');
 });
 
 // app.directive( "ngContextmenu", function(){

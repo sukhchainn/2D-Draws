@@ -9,19 +9,6 @@
 	<meta property="og:description" content="Make vectors and drawables.">
 	<meta property="og:image" content="">
 
-	<style>
-	    .pointer {
-	      cursor: pointer;
-	    }
-	    .highlight {
-	      color: white;
-	      background-color: #3498db;
-	    }
-	    .expanded {
-	      height: 400px;
-	    }
-  	</style>
-
 	<title>2D Draws</title>
 	<link rel="stylesheet" type="text/css" href="main.css">
 	<link rel="stylesheet" type="text/css" href="sidebar.css">
@@ -102,7 +89,7 @@
 		  		<ul ng-repeat="setting in settings" style="margin: 0px; padding: 0px;">
 					<li style="display: flex; justify-content: space-between; width: 100%; height: 40px;" class="setting-li" ng-click="">
 						<p style="display: inline;">{{setting.name}}<p>
-						<input style="display: inline;" type="{{setting.type}}" name="{{setting.name}}" value="{{setting.value}}" min="5" max="25" ng-if="setting.value ? checked='true' : false" />
+						<input style="display: inline;" type="{{setting.type}}" name="{{setting.name}}" value="{{setting.value}}" min="5" max="25" ng-model="setting.value" ng-chage="inputChanged" />
 					</li>
 				</ul>
 		  	</div>
